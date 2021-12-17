@@ -1,0 +1,48 @@
+environment: dev
+info:
+  name: Micro servicio de prueba
+  version: 0.0.1
+  description: Este es un micro servicio de prueba para ver que tanto se puede hacer
+
+web:
+  INSTANCE_PATH: /Users/ivonnearriola/Documents/Emqu/mic_serv_graphql/instance
+  SERVER_NAME: '127.0.0.1:5005'
+  ENV: 'development'
+  SECRET_KEY: 'Set_a_very_dificult_key use mic_serv_blueprint misc generate_key'
+  DEBUG: true
+  BUNDLE_ERRORS: true
+  PRESERVE_CONTEXT_ON_EXCEPTION: false
+
+db:
+  connection_string: 'mongodb://localhost:27017/graphql_sosa'
+
+path_schema: /Users/ivonnearriola/Documents/Emqu/mic_serv_graphql/microservice/core/actions
+logging:
+  version: 1
+  disable_existing_loggers: False
+  formatters:
+    standard:
+      format: '%(asctime)s [%(levelname)s] module: %(module)s %(name)s: %(message)s'
+    detailed:
+      format: '%(asctime)s [%(levelname)s] module: %(module)s line: %(lineno)d %(name)s: %(message)s'
+  handlers:
+    wsgi:
+      level: DEBUG
+      stream: ext://flask.logging.wsgi_errors_stream
+      formatter: standard
+      class: logging.StreamHandler
+    default:
+      level: DEBUG
+      formatter: standard
+      class: logging.StreamHandler
+    file_handler:
+      level: DEBUG
+      filename: /Users/ivonnearriola/Documents/Emqu/mic_serv_graphql/instance/log/test002.log
+      class: logging.handlers.RotatingFileHandler
+      maxBytes: 524288000
+      backupCount: 10
+      formatter: standard
+  root:
+    level: NOTSET
+    handlers: [file_handler, wsgi]
+    propagate: yes
