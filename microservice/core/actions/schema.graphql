@@ -1,0 +1,75 @@
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+"""Usuario del sistema"""
+type User {
+    id: ID!
+    """Direccion de correo"""
+    email: String!
+    """El usuario esta activo?"""
+    is_active: Boolean!
+}
+
+type UserResult {
+    """El proceso se llevo a cabo con exito?"""
+    success: Boolean!
+    """Listado de errores si existen"""
+    errors: [String]
+    """Listado de usuarios"""
+    user: User
+}
+
+type UsersResult{
+    """El proceso se llevo a cabo con exito?"""
+    success: Boolean!
+    """Listado de errores si existen"""
+    errors: [String]
+    """Datos del usuario"""
+    users: [User]
+}
+
+type Query {
+    """Listado de todos los usuarios"""
+    users: UsersResult!
+    """Obtener un usuario especifico"""
+    user(user_id: ID!): UserResult!
+}
+
+type DeleteUserResult {
+    """El proceso se llevo a cabo con exito?"""
+    success: Boolean!
+    """Listado de errores si existen"""
+    errors: [String]
+}
+
+type CheckUserPassword {
+    """El proceso se llevo a cabo con exito?"""
+    success: Boolean!
+    errors: [String]
+    """La contraseña coincide?"""
+    same: Boolean!
+}
+
+type Mutation {
+    """Crear un usuario"""
+    createUser(email: String!, passwd: String!): UserResult!
+    """Borrar un usuario"""
+    deleteUser(user_id: ID!): DeleteUserResult!
+    """Chequear si la contraseña proporcionada coincide con la de la DB"""
+    checkUserPasswd(email: String!, passwd: String!): CheckUserPassword!
+}
+
+# Example to create a new user:
+# mutation newUser {
+#   createUser(email:"jose.sosa@emqu.net", passwd:"mypass") {
+#     success
+#     errors
+#     user {
+#       id
+#       email
+#       is_active
+#     }
+#   }
+# }
