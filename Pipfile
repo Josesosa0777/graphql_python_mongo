@@ -15,6 +15,7 @@ alembic = "*"
 bcrypt = "*"
 bson = "*"
 dataclasses-json = "*"
+influxdb-client = "*"
 
 [dev-packages]
 icecream = "*"

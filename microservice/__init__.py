@@ -5,6 +5,7 @@ import click
 from icecream import ic
 from dependency_injector import providers
 from microservice.adapters.db.implementation import DB
+from microservice.adapters.db_influx import DBTimeSeries
 from microservice.core import Core
 
 
@@ -24,6 +25,14 @@ def core_init():
     core_container.config.from_yaml(config)
     core_container.db.override(
         providers.Singleton(DB, connection_string=core_container.config.db.connection_string)
+    )
+    core_container.db_stat.override(
+        providers.Singleton(DBTimeSeries,
+                            connection_string=core_container.config.db_time_series.connection_string,
+                            token=core_container.config.db_time_series.token,
+                            default_org=core_container.config.db_time_series.default_org,
+                            default_bucket=core_container.config.db_time_series.default_bucket)
+
     )
     core_container.init_resources()
     logging.info('logging initialized')

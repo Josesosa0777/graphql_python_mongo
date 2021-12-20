@@ -16,6 +16,17 @@ web:
 db:
   connection_string: 'mongodb://localhost:27017/graphql_sosa'
 
+db_time_series:
+  connection_string: '10.36.237.108:8086'
+  token: 'JJDLCiSbsuj9G_QlCE-izK6irtBZLrwhAw9Xe2pHg5gcr03pgQv2_Bf9J9Cm9tPxdH50vpAp5oucGsWwx-2rEA=='
+  default_org: 'AT&T'
+  default_bucket: 'stats'
+
+apis:
+  extractor_url: 'http://10.36.231.247:5020/'
+  device_url: 'http://10.36.237.108/devices/api/v1/device/'
+  influx: 'http://10.36.237.108:8086/'
+
 path_schema: /Users/ivonnearriola/Documents/Emqu/mic_serv_graphql/microservice/core/actions
 logging:
   version: 1

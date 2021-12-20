@@ -46,7 +46,7 @@ class DB(DBAdapter):
     def list_users(self):
         try:
             users_list = self.db.users.find()
-            users = [user.to_dict() for user in users_list]
+            users = [user for user in users_list]
             payload = {
                 "success": True,
                 "users": users
@@ -117,3 +117,22 @@ class DB(DBAdapter):
 
     def dummy(self):
         pass
+
+    def new_indicator(self, email, password):
+        try:
+            hashed_password = bcrypt.hashpw(password.encode('utf8'), bcrypt.gensalt())
+            print("hashed ", hashed_password)
+            user = User(email=email, hashed_password=hashed_password, is_active=True)
+            usr = user.to_dict()
+            self.db.users.insert(user.to_dict())
+            payload = {
+                "success": True,
+                "user": user
+            }
+        except Exception as error:
+            print("EEEE")
+            payload = {
+                "success": False,
+                "errors": [str(error)]
+            }
+        return payload
